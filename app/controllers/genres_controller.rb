@@ -24,14 +24,7 @@ class GenresController < ApplicationController
   # POST /genres
   # POST /genres.json
   def create
-    g = genre_params
-    if g[:parent_genre] == ""
-      g[:parent_genre] = nil
-    else
-      g[:parent_genre] = Genre.find(g[:parent_genre].to_i)
-    end
-
-    @genre = Genre.new(g)
+    @genre = Genre.new(set_params(genre_params))
     respond_to do |format|
       if @genre.save
         format.html { redirect_to @genre, notice: 'Genre was successfully created.' }
@@ -46,15 +39,8 @@ class GenresController < ApplicationController
   # PATCH/PUT /genres/1
   # PATCH/PUT /genres/1.json
   def update
-    g = genre_params
-    if g[:parent_genre] == ""
-      g[:parent_genre] = nil
-    else
-      g[:parent_genre] = Genre.find(g[:parent_genre].to_i)
-    end
-
     respond_to do |format|
-      if @genre.update(g)
+      if @genre.update(set_params(genre_params))
         format.html { redirect_to @genre, notice: 'Genre was successfully updated.' }
         format.json { render :show, status: :ok, location: @genre }
       else
@@ -83,5 +69,10 @@ class GenresController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def genre_params
       params.fetch(:genre, {}).permit(:name, :parent_genre)
+    end
+
+    def set_params(params)
+      params[:parent_genre] = params[:parent_genre] == "" ? nil : Genre.find(params[:parent_genre].to_i)
+      return params
     end
 end

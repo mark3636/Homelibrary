@@ -27,18 +27,18 @@
   </div>
 
   <div class="field">
+    <%= form.label :return_date %>
+    <%= form.date_field :return_date, id: :borrowing_return_date %>
+  </div>
+
+  <div class="field">
     <%= form.label :is_lost %>
-    <%= form.check_box :is_lost, id: :borrowing_is_lost %>
+    <%= form.check_box :is_lost, id: :borrowing_is_lost, class: 'checkbox' %>
   </div>
 
   <div class="field">
     <%= form.label :is_damaged %>
-    <%= form.check_box :is_damaged, id: :borrowing_is_damaged %>
-  </div>
-
-  <div class="field">
-    <%= form.label :return_date %>
-    <%= form.date_field :return_date, id: :borrowing_return_date %>
+    <%= form.check_box :is_damaged, id: :borrowing_is_damaged, class: 'checkbox' %>
   </div>
 
   <div class="field">

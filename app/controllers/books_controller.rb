@@ -4,7 +4,7 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.page(params[:page]).order('name DESC')
+    @books = Book.page(params[:page])
   end
 
   # GET /books/1
@@ -24,16 +24,7 @@ class BooksController < ApplicationController
   # POST /books
   # POST /books.json
   def create
-    p = book_params
-    p[:publishing_house] = PublishingHouse.find(p[:publishing_house].to_i)
-    gso = []
-    p[:genres].to_a.each { |g|
-      if g != ""
-        gso << Genre.find(g.to_i)
-      end
-    }
-    p[:genres] = gso
-    @book = Book.new(p)
+    @book = Book.new(set_params(book_params))
 
     respond_to do |format|
       if @book.save
@@ -50,7 +41,7 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1.json
   def update
     respond_to do |format|
-      if @book.update(book_params)
+      if @book.update(set_params(book_params))
         format.html { redirect_to @book, notice: 'Book was successfully updated.' }
         format.json { render :show, status: :ok, location: @book }
       else
@@ -80,5 +71,15 @@ class BooksController < ApplicationController
     def book_params
       params.fetch(:book, {}).permit(:name, :pub_year, :pic_author, :translator,
          :author, :comment, :publishing_house, :genres => [])
+    end
+
+    def set_params(params)
+      params[:publishing_house] = PublishingHouse.find(params[:publishing_house].to_i)
+      genres = []
+      params[:genres].to_a[1..-1].each { |genre|
+        genres << Genre.find(genre.to_i)
+      }
+      params[:genres] = genres
+      return params
     end
 end

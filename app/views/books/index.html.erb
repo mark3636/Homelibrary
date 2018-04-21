@@ -1,9 +1,8 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Books</h1>
 
-<%= link_to 'New Book', new_book_path %>
-
+<%= link_to new_book_path, class: 'btn' do %>
+  <i class="glyphicon glyphicon-plus"></i> New Book
+<% end %>
 <br><br>
 
 
@@ -22,9 +21,9 @@
       <tr>
         <td><%= book.name %></td>
         <td><%= book.author %></td>
-        <td><%= link_to 'Show', book %></td>
+        <td><%= link_to 'Show', book, class: 'btn btn-xs'  %></td>
         <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs' %></td>
       </tr>
     <% end %>
   </tbody>

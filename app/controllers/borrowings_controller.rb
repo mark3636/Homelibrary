@@ -24,8 +24,7 @@ class BorrowingsController < ApplicationController
   # POST /borrowings
   # POST /borrowings.json
   def create
-    # @borrowing = Borrowing.new(borrowing_params)
-    @borrowing = HELP_ME(borrowing_params)
+    @borrowing = Borrowing.new(set_params(borrowing_params))
 
     respond_to do |format|
       if @borrowing.save
@@ -42,7 +41,7 @@ class BorrowingsController < ApplicationController
   # PATCH/PUT /borrowings/1.json
   def update
     respond_to do |format|
-      if @borrowing.update(borrowing_params)
+      if @borrowing.update(set_params(borrowing_params))
         format.html { redirect_to @borrowing, notice: 'Borrowing was successfully updated.' }
         format.json { render :show, status: :ok, location: @borrowing }
       else
@@ -74,9 +73,9 @@ class BorrowingsController < ApplicationController
         :is_lost, :is_damaged, :return_date,:comment)
     end
 
-    def HELP_ME(params)
+    def set_params(params)
       params[:book] = Book.find(params[:book])
       params[:friend] = Friend.find(params[:friend])
-      return Borrowing.new(params)
+      return params
     end
 end
