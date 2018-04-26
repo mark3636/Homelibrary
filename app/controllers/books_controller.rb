@@ -9,11 +9,8 @@ class BooksController < ApplicationController
   def index
     #@books = Book.page(params[:page])
     @books = smart_listing_create(:books, Book.all,
-                                  partial: "books/list",
-                                  sort_attrbutes: [
-                                    [:name, 'books.name'],
-                                    [:author, 'books.author']
-                                  ])
+                                  partial: "books/list"
+                                )
   end
 
   # GET /books/1

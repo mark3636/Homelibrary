@@ -1,10 +1,16 @@
 class PublishingHousesController < ApplicationController
+  include SmartListing::Helper::ControllerExtensions
+  helper  SmartListing::Helper
+
   before_action :set_publishing_house, only: [:show, :edit, :update, :destroy]
 
   # GET /publishing_houses
   # GET /publishing_houses.json
   def index
-    @publishing_houses = PublishingHouse.all
+    @publishing_houses = smart_listing_create(:publishing_houses,
+                                              PublishingHouse.all,
+                                              partial: "publishing_houses/list"
+                                             )
   end
 
   # GET /publishing_houses/1
