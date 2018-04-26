@@ -1,0 +1,35 @@
+<% unless smart_listing.empty? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>
+          <%= smart_listing.sortable "Book name", :name %>
+        </th>
+        <th>
+          <%= smart_listing.sortable "Author", :author %>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% smart_listing.collection.each do |book| %>
+        <tr>
+          <td>
+            <%= book.name %>
+          </td>
+          <td>
+            <%= book.author %>
+          </td>
+          <td>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= smart_listing.item_new link: new_book_path %>
+
+  <%= smart_listing.paginate %>
+  <%= smart_listing.pagination_per_page_links %>
+<% else %>
+  <p class="warning">No records!</p>
+<% end %>

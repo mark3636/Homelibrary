@@ -15,5 +15,5 @@
 //= require jquery_ujs
 //= require jquery.turbolinks
 //= require bootstrap-sprockets
-//= require turbolinks
+//= require smart_listing
 //= require_tree .

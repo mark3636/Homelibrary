@@ -1,13 +1,13 @@
-<h1>Books</h1>
+<div class="page-header">
+  <h1>Books</h1>
+</div>
 
-<%= link_to new_book_path, class: 'btn' do %>
-  <i class="glyphicon glyphicon-plus"></i> New Book
-<% end %>
+<%= link_to 'New Book', new_book_path, class: 'btn'%>
 <br><br>
 
+<%= smart_listing_render(:books) %>
 
-
-<table class="table table-striped sortable">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
@@ -28,8 +28,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-
-<%= will_paginate @books %>

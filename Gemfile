@@ -29,11 +29,12 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'will_paginate'
+gem "haml"
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'jquery-turbolinks'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
+gem "smart_listing"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

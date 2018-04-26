@@ -1,10 +1,19 @@
 class BooksController < ApplicationController
+  include SmartListing::Helper::ControllerExtensions
+  helper  SmartListing::Helper
+
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   # GET /books
   # GET /books.json
   def index
-    @books = Book.page(params[:page])
+    #@books = Book.page(params[:page])
+    @books = smart_listing_create(:books, Book.all,
+                                  partial: "books/list",
+                                  sort_attrbutes: [
+                                    [:name, 'books.name'],
+                                    [:author, 'books.author']
+                                  ])
   end
 
   # GET /books/1
