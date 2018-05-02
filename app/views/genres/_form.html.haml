@@ -1,0 +1,16 @@
+%td{colspan: 3}
+  = form_for object, url: object.new_record? ? genres_path : genre_path(object),
+                     remote: true, html: {class: "form-horizontal"} do |f|
+    %p
+      Name:
+      = f.text_field :name
+
+    %p
+      Parent genre:
+      - genres = Genre.all.to_a
+      - genres.unshift(Genre.new(id: nil, name: "None"))
+      = collection_select(:genre, :parent_genre, genres, :id, :name)
+
+
+    = f.submit "Save", class: "btn btn-primary"
+    %button.btn.btn-link.cancel Cancel

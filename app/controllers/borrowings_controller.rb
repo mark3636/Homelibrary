@@ -4,7 +4,11 @@ class BorrowingsController < ApplicationController
   # GET /borrowings
   # GET /borrowings.json
   def index
-    @borrowings = Borrowing.all
+    borrowings_scope = Borrowing.all
+    @borrowings = smart_listing_create(:borrowings,
+                                    borrowings_scope,
+                                    partial: "borrowings/list"
+                                   )
   end
 
   # GET /borrowings/1
@@ -25,40 +29,19 @@ class BorrowingsController < ApplicationController
   # POST /borrowings.json
   def create
     @borrowing = Borrowing.new(set_params(borrowing_params))
-
-    respond_to do |format|
-      if @borrowing.save
-        format.html { redirect_to @borrowing, notice: 'Borrowing was successfully created.' }
-        format.json { render :show, status: :created, location: @borrowing }
-      else
-        format.html { render :new }
-        format.json { render json: @borrowing.errors, status: :unprocessable_entity }
-      end
-    end
+    @borrowing.save
   end
 
   # PATCH/PUT /borrowings/1
   # PATCH/PUT /borrowings/1.json
   def update
-    respond_to do |format|
-      if @borrowing.update(set_params(borrowing_params))
-        format.html { redirect_to @borrowing, notice: 'Borrowing was successfully updated.' }
-        format.json { render :show, status: :ok, location: @borrowing }
-      else
-        format.html { render :edit }
-        format.json { render json: @borrowing.errors, status: :unprocessable_entity }
-      end
-    end
+    @borrowing.update(set_params(borrowing_params))
   end
 
   # DELETE /borrowings/1
   # DELETE /borrowings/1.json
   def destroy
     @borrowing.destroy
-    respond_to do |format|
-      format.html { redirect_to borrowings_url, notice: 'Borrowing was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private

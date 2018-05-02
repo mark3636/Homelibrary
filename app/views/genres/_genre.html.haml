@@ -1,0 +1,4 @@
+%td= object.name
+%td= object.parent_genre ? object.parent_genre.name : '-'
+%td.actions{align: :right}= smart_listing_item_actions [ {name: :edit, url: edit_genre_path(object)},
+                                          {name: :destroy, url: genre_path(object), confirmation: "Are you sure you want to delete this?"}]

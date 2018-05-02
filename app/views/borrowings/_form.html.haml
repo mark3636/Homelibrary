@@ -1,0 +1,34 @@
+%td{colspan: 7}
+  = form_for object, url: object.new_record? ? borrowings_path : borrowing_path(object),
+                     remote: true, html: {class: "form-horizontal"} do |f|
+    %p
+      Book:
+      = collection_select(:borrowing, :book, Book.all, :id, :name)
+
+    %p
+      Friend:
+      = collection_select(:borrowing, :friend, Friend.all, :id, :full_name)
+
+    %p
+      Borrow date:
+      = f.date_field :borrow_date
+
+    %p
+      Return date:
+      = f.date_field :return_date
+
+    %p
+      Is lost:
+      = f.check_box :is_lost
+
+    %p
+      Is damaged:
+      = f.check_box :is_damaged
+
+    %p
+      Comment:
+      = f.text_area :comment
+
+
+    = f.submit "Save", class: "btn btn-primary"
+    %button.btn.btn-link.cancel Cancel

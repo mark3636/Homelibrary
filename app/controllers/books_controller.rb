@@ -1,13 +1,11 @@
 class BooksController < ApplicationController
-  include SmartListing::Helper::ControllerExtensions
-  helper  SmartListing::Helper
-
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   # GET /books
   # GET /books.json
   def index
-    #@books = Book.page(params[:page])
+    books_scope = Book.all
+    books_scope = books_scope.like(params[:filter]) if params[:filter]
     @books = smart_listing_create(:books, Book.all,
                                   partial: "books/list"
                                 )
@@ -31,40 +29,19 @@ class BooksController < ApplicationController
   # POST /books.json
   def create
     @book = Book.new(set_params(book_params))
-
-    respond_to do |format|
-      if @book.save
-        format.html { redirect_to @book, notice: 'Book was successfully created.' }
-        format.json { render :show, status: :created, location: @book }
-      else
-        format.html { render :new }
-        format.json { render json: @book.errors, status: :unprocessable_entity }
-      end
-    end
+    @book.save
   end
 
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
   def update
-    respond_to do |format|
-      if @book.update(set_params(book_params))
-        format.html { redirect_to @book, notice: 'Book was successfully updated.' }
-        format.json { render :show, status: :ok, location: @book }
-      else
-        format.html { render :edit }
-        format.json { render json: @book.errors, status: :unprocessable_entity }
-      end
-    end
+    @book.update(set_params(book_params))
   end
 
   # DELETE /books/1
   # DELETE /books/1.json
   def destroy
     @book.destroy
-    respond_to do |format|
-      format.html { redirect_to books_url, notice: 'Book was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private

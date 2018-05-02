@@ -1,0 +1,18 @@
+- unless smart_listing.empty?
+  %table.table.table-striped
+    %thead
+      %th= smart_listing.sortable "Book's name", :book_name
+      %th= smart_listing.sortable "Friend's name", :friend_name
+      %th= smart_listing.sortable "Borrow date", :borrow_date
+      %th= smart_listing.sortable "Return date", :return_date
+      %th= "Is lost"
+      %th= "Is damaged"
+    %tbody
+      - smart_listing.collection.each do |o|
+        %tr.editable{data: {id: o.id}}
+          = smart_listing.render object: o, partial: "borrowings/borrowing", locals: {object: o}
+      = smart_listing.item_new colspan: 7, link: new_borrowing_path
+  = smart_listing.paginate
+  = smart_listing.pagination_per_page_links
+- else
+  %p.warning No friends

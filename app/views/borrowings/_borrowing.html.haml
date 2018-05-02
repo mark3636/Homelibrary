@@ -1,0 +1,9 @@
+%td= object.book.name
+%td= object.friend.full_name
+%td= object.borrow_date
+%td= object.return_date
+%td= borrowing.is_lost
+%td= borrowing.is_damaged
+%td.actions{align: :right}= smart_listing_item_actions [ {name: :show, url: borrowing_path(object)},
+                                          {name: :edit, url: edit_borrowing_path(object)},
+                                          {name: :destroy, url: borrowing_path(object), confirmation: "Are you sure you want to delete this?"}]

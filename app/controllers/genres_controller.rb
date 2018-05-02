@@ -1,10 +1,15 @@
 class GenresController < ApplicationController
-  before_action :set_genre, only: [:show, :edit, :update, :destroy]
+  before_action :set_genre, only: [:edit, :update, :destroy]
 
   # GET /genres
   # GET /genres.json
   def index
-    @genres = Genre.all
+    genres_scope = Genre.all
+    genres_scope = genres_scope.like(params[:filter]) if params[:filter]
+    @genres = smart_listing_create(:genres,
+                                   genres_scope,
+                                   partial: "genres/list"
+                                  )
   end
 
   # GET /genres/1
@@ -25,39 +30,19 @@ class GenresController < ApplicationController
   # POST /genres.json
   def create
     @genre = Genre.new(set_params(genre_params))
-    respond_to do |format|
-      if @genre.save
-        format.html { redirect_to @genre, notice: 'Genre was successfully created.' }
-        format.json { render :show, status: :created, location: @genre }
-      else
-        format.html { render :new }
-        format.json { render json: @genre.errors, status: :unprocessable_entity }
-      end
-    end
+    @genre.save
   end
 
   # PATCH/PUT /genres/1
   # PATCH/PUT /genres/1.json
   def update
-    respond_to do |format|
-      if @genre.update(set_params(genre_params))
-        format.html { redirect_to @genre, notice: 'Genre was successfully updated.' }
-        format.json { render :show, status: :ok, location: @genre }
-      else
-        format.html { render :edit }
-        format.json { render json: @genre.errors, status: :unprocessable_entity }
-      end
-    end
+    @genre.update(set_params(genre_params))
   end
 
   # DELETE /genres/1
   # DELETE /genres/1.json
   def destroy
     @genre.destroy
-    respond_to do |format|
-      format.html { redirect_to genres_url, notice: 'Genre was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private

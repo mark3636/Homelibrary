@@ -1,0 +1,13 @@
+- unless smart_listing.empty?
+  %table.table.table-striped
+    %thead
+      %th= smart_listing.sortable "Name", :name
+    %tbody
+      - smart_listing.collection.each do |o|
+        %tr.editable{data: {id: o.id}}
+          = smart_listing.render object: o, partial: "publishing_houses/publishing_house", locals: {object: o}
+      = smart_listing.item_new colspan: 2, link: new_publishing_house_path
+  = smart_listing.paginate
+  = smart_listing.pagination_per_page_links
+- else
+  %p.warning No publishing houses

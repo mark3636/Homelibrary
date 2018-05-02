@@ -1,0 +1,5 @@
+%td= object.name
+%td= object.author
+%td.actions{align: :right}= smart_listing_item_actions [ {name: :show, url: book_path(object)},
+                                          {name: :edit, url: edit_book_path(object)},
+                                          {name: :destroy, url: book_path(object), confirmation: "Are you sure you want to delete this?"}]

@@ -1,22 +1,17 @@
 class PublishingHousesController < ApplicationController
-  include SmartListing::Helper::ControllerExtensions
-  helper  SmartListing::Helper
-
-  before_action :set_publishing_house, only: [:show, :edit, :update, :destroy]
+  before_action :set_publishing_house, only: [:edit, :update, :destroy]
 
   # GET /publishing_houses
   # GET /publishing_houses.json
   def index
+    publishing_houses_scope = PublishingHouse.all
+    publishing_houses_scope = publishing_houses_scope.like(params[:filter]) if params[:filter]
     @publishing_houses = smart_listing_create(:publishing_houses,
-                                              PublishingHouse.all,
+                                              publishing_houses_scope,
                                               partial: "publishing_houses/list"
                                              )
   end
 
-  # GET /publishing_houses/1
-  # GET /publishing_houses/1.json
-  def show
-  end
 
   # GET /publishing_houses/new
   def new
@@ -31,40 +26,19 @@ class PublishingHousesController < ApplicationController
   # POST /publishing_houses.json
   def create
     @publishing_house = PublishingHouse.new(publishing_house_params)
-
-    respond_to do |format|
-      if @publishing_house.save
-        format.html { redirect_to @publishing_house, notice: 'Publishing house was successfully created.' }
-        format.json { render :show, status: :created, location: @publishing_house }
-      else
-        format.html { render :new }
-        format.json { render json: @publishing_house.errors, status: :unprocessable_entity }
-      end
-    end
+    @publishing_house.save
   end
 
   # PATCH/PUT /publishing_houses/1
   # PATCH/PUT /publishing_houses/1.json
   def update
-    respond_to do |format|
-      if @publishing_house.update(publishing_house_params)
-        format.html { redirect_to @publishing_house, notice: 'Publishing house was successfully updated.' }
-        format.json { render :show, status: :ok, location: @publishing_house }
-      else
-        format.html { render :edit }
-        format.json { render json: @publishing_house.errors, status: :unprocessable_entity }
-      end
-    end
+    @publishing_house.update(publishing_house_params)
   end
 
   # DELETE /publishing_houses/1
   # DELETE /publishing_houses/1.json
   def destroy
     @publishing_house.destroy
-    respond_to do |format|
-      format.html { redirect_to publishing_houses_url, notice: 'Publishing house was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private
