@@ -6,5 +6,5 @@ class Genre < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
-  scope :like, ->(args) { where("name like '%#{args}%'")}
+  scope :like, ->(args) { where("lower(name) like '%#{args}%'")}
 end

@@ -1,14 +1,17 @@
-- unless smart_listing.empty?
-  %table.table.table-striped
-    %thead
-      %th= smart_listing.sortable "Name", :name
-      %th= smart_listing.sortable "Author", :author
-    %tbody
-      - smart_listing.collection.each do |o|
-        %tr.editable{data: {id: o.id}}
-          = smart_listing.render object: o, partial: "books/book", locals: {object: o}
-      = smart_listing.item_new colspan: 3, link: new_book_path
-  = smart_listing.paginate
-  = smart_listing.pagination_per_page_links
-- else
-  %p.warning No books
+%table.table.table-striped
+  %thead
+    %th= smart_listing.sortable "Name", :name
+    %th= smart_listing.sortable "Publication year", :pub_year
+    %th= smart_listing.sortable "Pictures author", :pic_author
+    %th= smart_listing.sortable "Translator", :translator
+    %th= smart_listing.sortable "Author", :author
+    %th= "Comment"
+    %th= "Publisihng house"
+    %th= "Genres"
+  %tbody
+    - smart_listing.collection.each do |o|
+      %tr.editable{data: {id: o.id}}
+        = smart_listing.render object: o, partial: "books/book", locals: {object: o}
+    = smart_listing.item_new colspan: 9, link: new_book_path
+= smart_listing.paginate
+= smart_listing.pagination_per_page_links

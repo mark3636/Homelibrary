@@ -1,17 +1,27 @@
 %td{colspan: 6}
   = form_for object, url: object.new_record? ? friends_path : friend_path(object),
                      remote: true, html: {class: "form-horizontal"} do |f|
+
+    -if object.errors.any?
+      #error_explanation
+        %h2
+          =pluralize(object.errors.count, "error") + "prohibited this " + object.class.to_s + " from being saved:"
+
+        %ul
+          -object.errors.full_messages.each do |message|
+            %li= message
+
     %p
       Full name:
       = f.text_field :full_name
 
     %p
       Email:
-      = f.email_field :email
+      = f.text_field :email
 
     %p
       Phone number:
-      = f.telephone_field :phone_number
+      = f.text_field :phone_number
 
     %p
       Social profile:

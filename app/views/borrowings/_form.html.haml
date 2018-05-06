@@ -1,13 +1,26 @@
-%td{colspan: 7}
+%td{colspan: 8}
   = form_for object, url: object.new_record? ? borrowings_path : borrowing_path(object),
                      remote: true, html: {class: "form-horizontal"} do |f|
+
+    -if object.errors.any?
+      #error_explanation
+        %h2
+          =pluralize(object.errors.count, "error") + "prohibited this " + object.class.to_s + " from being saved:"
+
+        %ul
+          -object.errors.full_messages.each do |message|
+            %li= message
+
+
     %p
       Book:
-      = collection_select(:borrowing, :book, Book.all, :id, :name)
+      = collection_select(:borrowing, :book, Book.all, :id, :name,
+                          {:selected => object.book ? object.book.id : Book.first})
 
     %p
       Friend:
-      = collection_select(:borrowing, :friend, Friend.all, :id, :full_name)
+      = collection_select(:borrowing, :friend, Friend.all, :id, :full_name,
+                          {:selected => object.friend ? object.friend.id : Friend.first})
 
     %p
       Borrow date:

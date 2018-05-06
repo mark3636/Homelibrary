@@ -1,15 +1,14 @@
-- unless smart_listing.empty?
-  %table.table.table-striped
-    %thead
-      %th= smart_listing.sortable "Full name", :full_name
-      %th= smart_listing.sortable "Phone number", :phone_number
-      %th= smart_listing.sortable "Social profile", :social_profile
-    %tbody
-      - smart_listing.collection.each do |o|
-        %tr.editable{data: {id: o.id}}
-          = smart_listing.render object: o, partial: "friends/friend", locals: {object: o}
-      = smart_listing.item_new colspan: 4, link: new_friend_path
-  = smart_listing.paginate
-  = smart_listing.pagination_per_page_links
-- else
-  %p.warning No friends
+%table.table.table-striped
+  %thead
+    %th= smart_listing.sortable "Full name", :full_name
+    %th= smart_listing.sortable "Email", :email
+    %th= smart_listing.sortable "Phone number", :phone_number
+    %th= smart_listing.sortable "Social profile", :social_profile
+    %th=  "Comment"
+  %tbody
+    - smart_listing.collection.each do |o|
+      %tr.editable{data: {id: o.id}}
+        = smart_listing.render object: o, partial: "friends/friend", locals: {object: o}
+    = smart_listing.item_new colspan: 6, link: new_friend_path
+= smart_listing.paginate
+= smart_listing.pagination_per_page_links

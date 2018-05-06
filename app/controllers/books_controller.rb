@@ -6,7 +6,7 @@ class BooksController < ApplicationController
   def index
     books_scope = Book.all
     books_scope = books_scope.like(params[:filter]) if params[:filter]
-    @books = smart_listing_create(:books, Book.all,
+    @books = smart_listing_create(:books, books_scope,
                                   partial: "books/list"
                                 )
   end

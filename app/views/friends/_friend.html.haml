@@ -1,6 +1,7 @@
 %td= object.full_name
+%td= object.email
 %td= object.phone_number
 %td= object.social_profile
-%td.actions{align: :right}= smart_listing_item_actions [ {name: :show, url: friend_path(object)},
-                                          {name: :edit, url: edit_friend_path(object)},
-                                          {name: :destroy, url: friend_path(object), confirmation: "Are you sure you want to delete this?"}]
+%td= object.comment
+%td.actions{align: :right}= smart_listing_item_actions [{name: :edit, url: edit_friend_path(object)},
+                                                        {name: :destroy, url: friend_path(object), confirmation: "Are you sure you want to delete this?"}]

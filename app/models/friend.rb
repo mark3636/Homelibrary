@@ -4,8 +4,8 @@ class Friend < ApplicationRecord
   validates :full_name, presence: true
   validates :phone_number, presence: true, uniqueness: true
 
-  has_many :borrowings
+  has_many :borrowings, dependent: :delete_all
   has_many :books, through: :borrowings
 
-  scope :like, ->(args) { where("full_name like '%#{args}%'")}
+  scope :like, ->(args) { where("lower(full_name) like '%#{args}%'")}
 end

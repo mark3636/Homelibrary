@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(version: 20180413144044) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["book_id", "friend_id", "borrow_date"], name: "index_borrowings_on_book_id_and_friend_id_and_borrow_date", unique: true
     t.index ["book_id"], name: "index_borrowings_on_book_id"
     t.index ["friend_id"], name: "index_borrowings_on_friend_id"
-    t.index [nil, nil, "borrow_date"], name: "index_borrowings_on_book_and_friend_and_borrow_date", unique: true
   end
 
   create_table "friends", force: :cascade do |t|

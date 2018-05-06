@@ -1,14 +1,11 @@
-- unless smart_listing.empty?
-  %table.table.table-striped
-    %thead
-      %th= smart_listing.sortable "Name", :name
-      %th= smart_listing.sortable "Parent genre", :parent_genre
-    %tbody
-      - smart_listing.collection.each do |o|
-        %tr.editable{data: {id: o.id}}
-          = smart_listing.render object: o, partial: "genres/genre", locals: {object: o}
-      = smart_listing.item_new colspan: 3, link: new_genre_path
-  = smart_listing.paginate
-  = smart_listing.pagination_per_page_links
-- else
-  %p.warning No genres
+%table.table.table-striped
+  %thead
+    %th= smart_listing.sortable "Name", :name
+    %th= smart_listing.sortable "Parent genre", :parent_genre
+  %tbody
+    - smart_listing.collection.each do |o|
+      %tr.editable{data: {id: o.id}}
+        = smart_listing.render object: o, partial: "genres/genre", locals: {object: o}
+    = smart_listing.item_new colspan: 3, link: new_genre_path
+= smart_listing.paginate
+= smart_listing.pagination_per_page_links

@@ -3,5 +3,5 @@ class PublishingHouse < ApplicationRecord
 
   has_many :books
 
-  scope :like, ->(args) { where("name like '%#{args}%'")}
+  scope :like, ->(args) { where("lower(name) like '%#{args}%'")}
 end

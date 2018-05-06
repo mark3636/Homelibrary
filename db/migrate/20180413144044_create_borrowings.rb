@@ -11,6 +11,6 @@ class CreateBorrowings < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
-    add_index :borrowings, [:book, :friend, :borrow_date], unique: true
+    add_index :borrowings, [:book_id, :friend_id, :borrow_date], unique: true
   end
 end

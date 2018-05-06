@@ -1,37 +1,50 @@
 %td{colspan: 9}
   = form_for object, url: object.new_record? ? books_path : book_path(object),
                      remote: true, html: {class: "form-horizontal"} do |f|
+
+    -if object.errors.any?
+      #error_explanation
+        %h2
+          =pluralize(object.errors.count, "error") + "prohibited this " + object.class.to_s + " from being saved:"
+
+        %ul
+          -object.errors.full_messages.each do |message|
+            %li= message
+
+
     %p
       Name:
-      = f.text_field :name
+      = f.text_field :name, class: 'form-control'
 
-      %p
-        Publication year:
-        = f.number_field :pub_year
+    %p
+      Publication year:
+      = f.number_field :pub_year, class: 'form-control'
 
-      %p
-        Pictures author:
-        = f.text_field :pic_author
+    %p
+      Pictures author:
+      = f.text_field :pic_author
 
-      %p
-        Translator:
-        = f.text_field :translator
+    %p
+      Translator:
+      = f.text_field :translator
 
-      %p
-        Author:
-        = f.text_field :author
+    %p
+      Author:
+      = f.text_field :author
 
-      %p
-        Comment:
-        = f.text_area :comment
+    %p
+      Comment:
+      = f.text_area :comment
 
-      %p
-        Publisihng house:
-        = collection_select(:book, :publishing_house, PublishingHouse.all, :id, :name)
+    %p
+      Publisihng house:
+      = collection_select(:book, :publishing_house, PublishingHouse.all, :id, :name,
+      {:selected => object.publishing_house ? object.publishing_house.id : nil})
 
-      %p
-        Genres:
-        = collection_check_boxes(:book, :genres, Genre.all, :id, :name)
+    %p
+      Genres:
+      = collection_select(:book, :genres, Genre.all, :id, :name,
+      {:selected => object.genres ? object.genres.map(&:id) : nil}, {:multiple => true, 'data-width' => "100%", :class => 'form-control'})
 
     = f.submit "Save", class: "btn btn-primary"
     %button.btn.btn-link.cancel Cancel

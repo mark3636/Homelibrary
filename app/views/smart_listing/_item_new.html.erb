@@ -13,7 +13,9 @@
     new_item_autoshow         automatically show new item placeholder
     new_item_content          new item placeholder content (usually some form)
 -%>
-
+<% class_name = url_options[:_recall][:controller].gsub('_', ' ')[0...-1]%>
+<% new_item_button_text = 'New ' + class_name%>
+<% no_items_text = 'No ' + class_name + 's'%>
 <%= content_tag(:tr, '', :class => placeholder_classes + %w{info}, :data => {smart_listing_config.data_attributes(:autoshow) => new_item_autoshow}) do %>
   <%= new_item_content %>
 <% end %>
