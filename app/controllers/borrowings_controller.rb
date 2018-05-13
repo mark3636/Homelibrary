@@ -5,6 +5,8 @@ class BorrowingsController < ApplicationController
   # GET /borrowings.json
   def index
     borrowings_scope = Borrowing.all
+    borrowings_scope = borrowings_scope.is_lost if params[:is_lost] == "1"
+    borrowings_scope = borrowings_scope.is_damaged if params[:is_damaged] == "1"
     @borrowings = smart_listing_create(:borrowings,
                                     borrowings_scope,
                                     partial: "borrowings/list"

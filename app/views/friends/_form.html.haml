@@ -5,32 +5,35 @@
     -if object.errors.any?
       #error_explanation
         %h2
-          =pluralize(object.errors.count, "error") + "prohibited this " + object.class.to_s + " from being saved:"
+          =pluralize(object.errors.count, "error") + " prohibited this " + object.class.to_s + " from being saved:"
 
         %ul
           -object.errors.full_messages.each do |message|
             %li= message
 
+    %span.col1
+      :css
+        .col1{ display: inline-block; width: 10% }
+
     %p
-      Full name:
+      %span.col1 Full name:
       = f.text_field :full_name
 
     %p
-      Email:
+      %span.col1 Email:
       = f.text_field :email
 
     %p
-      Phone number:
+      %span.col1 Phone number:
       = f.text_field :phone_number
 
     %p
-      Social profile:
+      %span.col1 Social profile:
       = f.text_field :social_profile
 
     %p
-      Comment:
+      %span.col1 Comment:
       = f.text_area :comment
-
 
     = f.submit "Save", class: "btn btn-primary"
     %button.btn.btn-link.cancel Cancel
